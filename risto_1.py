@@ -47,7 +47,7 @@ class Ristorante:
 #test
 
 
-ristorante1 = Ristorante("Bop","Asian")
+ristorante1 = Ristorante("Ciao Pizza","Pizzeria")
 
 ristorante1.descrivi_ristorante()
 
