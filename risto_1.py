@@ -1,10 +1,11 @@
 class Ristorante:
-    aperto = False
-    menu = {} #piatti e prezzi
+
 
     def __init__(self,nome,tipo_cucina):
         self.nome = nome
         self.tipo_cucina = tipo_cucina
+        self.aperto = False
+        self.menu = {} #piatti e prezzi
 
     def descrivi_ristorante(self):
         print(f"'{self.nome}' è un ristorante {self.tipo_cucina}")
