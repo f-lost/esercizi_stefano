@@ -40,7 +40,8 @@ class Ristorante:
 
     def stampa_menu(self):
         print(f"Il menù di '{self.nome}' è il seguente:\n")
-        print(self.menu)
+        for piatto, prezzo in self.menu.items():
+            print(f"{piatto}: {prezzo}€")
 
 
 
