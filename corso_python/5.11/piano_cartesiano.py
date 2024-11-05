@@ -38,6 +38,24 @@ class PianoCartesiano:
         for i in range(len(self.piano)):
             print(f"({self.piano[i].x},{self.piano[i].y})")
 
+    def retta(self,a,b):
+
+        if a.x != b.x and a.y != b.y:
+            m = (b.y-a.y)/(b.x-a.x)
+            q = a.y - m*a.x
+            if q > 0:
+                print(f"La retta passante per ({a.x},{a.y}) e ({b.x},{b.y}) è : y={m}x + {q}")
+            else:
+                q = -q
+                print(f"La retta passante per ({a.x},{a.y}) e ({b.x},{b.y}) è : y={m}x - {q}")
+        elif a.x == a.x and a.y == b.y:
+            print("Dammi due punti distinti.")
+        elif a.x == b.x and a.y != b.y:
+            print(f"La retta passante per ({a.x},{a.y}) e ({b.x},{b.y}) è : x={a.x}")
+        else:
+            print(f"La retta passante per ({a.x},{a.y}) e ({b.x},{b.y}) è : y={a.y}")
+
+
         
 
 
@@ -56,7 +74,12 @@ class Punto:
         return d
     
 
+
+#test
 xyz = PianoCartesiano()
 xyz.stampa()
+a = Punto(2,3)
+b= Punto(1,2)
 
+xyz.retta(a,b)
 
