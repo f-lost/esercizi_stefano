@@ -66,8 +66,8 @@ class Punto:
         self.y = y
 
     def muovi(self,dx,dy):
-        x += dx
-        y += dy
+        self.x += dx
+        self.y += dy
 
     def distanza_da_origine(self):
         d = math.sqrt(self.x**2 + self.y**2)
