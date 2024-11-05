@@ -48,19 +48,50 @@ class Fabbrica:
 
 class Elettronica(Prodotto):
     
-    def __init__(self,nome,costo_produzione,prezzo_vendita, garanzia):
+    def __init__(self,nome,costo_produzione,prezzo_vendita):
 
         Prodotto.__init__(self,nome,costo_produzione,prezzo_vendita)
-        self.garanzia = garanzia
+        self.__garanzia = ""
 
+    def set_garanzia(self, garanzia):
+
+        self.__garanzia = garanzia
+
+    def get_garanzia(self):
+
+        return self.__garanzia
+    
 
 class Abbigliamento(Prodotto):
 
-    def __init__(self,nome,costo_produzione,prezzo_vendita, materiale):
+    def __init__(self,nome,costo_produzione,prezzo_vendita):
 
         Prodotto.__init__(self,nome,costo_produzione,prezzo_vendita)
-        self.materiale = materiale
+        self.__materiale = ""
 
+    def set_materiale(self, materiale):
+
+        self.__materiale = materiale
+
+    def get_materiale(self):
+
+        return self.__materiale
+
+
+class Accessoristica(Prodotto):
+
+    def __init__(self,nome,costo_produzione,prezzo_vendita):
+
+        Prodotto.__init__(self,nome,costo_produzione,prezzo_vendita)
+        self.__colore = ""
+
+    def set_colore(self, colore):
+
+        self.__colore = colore
+
+    def get_colore(self):
+
+        return self.__colore
 
 
 #test
@@ -70,12 +101,28 @@ fab1 = Fabbrica("Fabbrica di Prova")
 prodotto1 = Prodotto("Prodotto", 10, 100)
 prodotto2 = Prodotto("Prodotto2", 2, 10)
 
+pc = Elettronica("Lenovo", 100, 200)
+pc.set_garanzia(4)
+
+maglietta = Abbigliamento("Adidas",5,20)
+maglietta.set_materiale("cotone")
+
+occhiali = Accessoristica("Polaroid", 8, 20)
+occhiali.set_colore("rossi")
+
 prodotto1.calcola_profitto()
+pc.calcola_profitto()
+maglietta.calcola_profitto()
+occhiali.calcola_profitto()
 
 fab1.aggiungi_prodotto(prodotto1)
 fab1.aggiungi_prodotto(prodotto2)
+fab1.aggiungi_prodotto(maglietta)
+fab1.aggiungi_prodotto(pc)
+fab1.aggiungi_prodotto(occhiali)
 
 fab1.vendi_prodotto(prodotto1)
+fab1.vendi_prodotto(occhiali)
 
 fab1.resi_prodotto(prodotto1)
 
