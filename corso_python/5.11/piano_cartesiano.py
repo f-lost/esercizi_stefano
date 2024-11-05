@@ -56,9 +56,6 @@ class PianoCartesiano:
             print(f"La retta passante per ({a.x},{a.y}) e ({b.x},{b.y}) è : y={a.y}")
 
 
-        
-
-
 class Punto:
 
     def __init__(self, x, y): #init è il metodo costuttore, è necessario e ha bisogno di self come placeholder
