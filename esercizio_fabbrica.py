@@ -46,6 +46,23 @@ class Fabbrica:
             print(f"{prodotto}: {quantità}")
 
 
+class Elettronica(Prodotto):
+    
+    def __init__(self,nome,costo_produzione,prezzo_vendita, garanzia):
+
+        Prodotto.__init__(self,nome,costo_produzione,prezzo_vendita)
+        self.garanzia = garanzia
+
+
+class Abbigliamento(Prodotto):
+
+    def __init__(self,nome,costo_produzione,prezzo_vendita, materiale):
+
+        Prodotto.__init__(self,nome,costo_produzione,prezzo_vendita)
+        self.materiale = materiale
+
+
+
 #test
 
 fab1 = Fabbrica("Fabbrica di Prova")
