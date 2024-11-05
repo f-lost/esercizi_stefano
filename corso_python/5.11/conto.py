@@ -35,6 +35,8 @@ class ContoBancario:
             return True
         else:
             print("Errore: importo negativo")
+
+
 #test
 conto1 = ContoBancario()
 
@@ -49,4 +51,7 @@ conto1.deposita(5)
 conto1.preleva(-2)
 
 conto1.visualizza_saldo()
+
+if conto1.__positivo(3):
+    print("Ciao")
 
