@@ -79,4 +79,3 @@ a = Punto(2,3)
 b= Punto(1,2)
 
 xyz.retta(a,b)
-

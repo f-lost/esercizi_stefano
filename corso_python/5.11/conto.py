@@ -32,7 +32,8 @@ class ContoBancario:
 
     def __positivo(self,importo):
         if importo >= 0:
-            return True
+            self.x = True #potevo fare una funzione privata getter che s
+            return self.x
         else:
             print("Errore: importo negativo")
 
