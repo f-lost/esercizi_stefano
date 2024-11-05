@@ -6,12 +6,12 @@ class ContoBancario:
         self.__saldo = 0
 
     def deposita(self, importo):
-        if importo >= 0:
+        if self.__positivo(importo):
             self.__saldo += importo
             print(f"È stato effettuato un deposito di {importo}€ ")
 
     def preleva(self, importo):
-        if  importo > 0 and self.__saldo > importo:
+        if  self.__positivo(importo) and self.__saldo > importo:
             self.__saldo -= importo
             print(f"È stato effettuato un prelievo di {importo}€ ")
 
@@ -30,8 +30,11 @@ class ContoBancario:
 
         self.__saldo = saldo
 
-
-
+    def __positivo(self,importo):
+        if importo >= 0:
+            return True
+        else:
+            print("Errore: importo negativo")
 #test
 conto1 = ContoBancario()
 
@@ -43,7 +46,7 @@ conto1.visualizza_saldo()
 
 conto1.deposita(5)
 
-conto1.preleva(10)
+conto1.preleva(-2)
 
 conto1.visualizza_saldo()
 
