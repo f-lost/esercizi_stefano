@@ -93,6 +93,8 @@ class Accessoristica(Prodotto):
 
         return self.__colore
 
+def calcola_profitto(a):
+    a.calcola_profitto()
 
 #test
 
@@ -127,4 +129,7 @@ fab1.vendi_prodotto(occhiali)
 fab1.resi_prodotto(prodotto1)
 
 fab1.stampa_inventario()
+
+calcola_profitto(prodotto1)
+calcola_profitto(occhiali)
 
