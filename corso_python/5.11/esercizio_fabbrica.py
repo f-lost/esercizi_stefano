@@ -94,7 +94,10 @@ class Accessoristica(Prodotto):
         return self.__colore
 
 def calcola_profitto(a):
-    a.calcola_profitto()
+    if isinstance(a, Prodotto):
+        a.calcola_profitto()
+    else:
+        print("Tipo non supportato")
 
 #test
 
