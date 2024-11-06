@@ -1,3 +1,6 @@
+#Team 1 gruppo Cosimo - Lorenzo - Roberta - Stefano
+
+
 '''creare una classe base Veicolo con attributi comuni a tutti i veicoli e metodi per operazioni comuni 
 come l'accensione e lo spegnimento. Derivando questa classe, creeranno specifiche classi per
  Auto, Furgone e Motocicletta, aggiungendo caratteristiche uniche per ciascun tipo di veicolo.
