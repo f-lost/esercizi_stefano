@@ -1,14 +1,66 @@
 class Prodotto:
 
-    def __init__(self,nome,costo_produzione,prezzo_vendita):
+    def __init__(self,nome,costo_produzione,prezzo_vendita,quantità = 1):
         self.nome = nome
         self.costo_produzione = costo_produzione
         self.prezzo_vendita = prezzo_vendita
+        self.quantità = quantità
 
     def calcola_profitto(self):
         profitto = self.prezzo_vendita - self.costo_produzione
         print(f"Il profitto derivante dalla vendita di {self.nome} è di {profitto}€")
+
+    def quanti(self):
+        print(f"Ci sono {self.quantità} {self.nome}")
+
     
+class Elettronica(Prodotto):
+    
+    def __init__(self,nome,costo_produzione,prezzo_vendita,quantità = 1):
+
+        Prodotto.__init__(self,nome,costo_produzione,prezzo_vendita)
+        self.__garanzia = ""
+
+    def set_garanzia(self, garanzia):
+
+        self.__garanzia = garanzia
+
+    def get_garanzia(self):
+
+        return self.__garanzia
+    
+
+class Abbigliamento(Prodotto):
+
+    def __init__(self,nome,costo_produzione,prezzo_vendita,quantità = 1):
+
+        Prodotto.__init__(self,nome,costo_produzione,prezzo_vendita)
+        self.__materiale = ""
+
+    def set_materiale(self, materiale):
+
+        self.__materiale = materiale
+
+    def get_materiale(self):
+
+        return self.__materiale
+
+
+class Accessoristica(Prodotto):
+
+    def __init__(self,nome,costo_produzione,prezzo_vendita,quantità = 1):
+
+        Prodotto.__init__(self,nome,costo_produzione,prezzo_vendita)
+        self.__colore = ""
+
+    def set_colore(self, colore):
+
+        self.__colore = colore
+
+    def get_colore(self):
+
+        return self.__colore
+
 
 class Fabbrica:
     
@@ -46,52 +98,7 @@ class Fabbrica:
             print(f"{prodotto}: {quantità}")
 
 
-class Elettronica(Prodotto):
-    
-    def __init__(self,nome,costo_produzione,prezzo_vendita):
 
-        Prodotto.__init__(self,nome,costo_produzione,prezzo_vendita)
-        self.__garanzia = ""
-
-    def set_garanzia(self, garanzia):
-
-        self.__garanzia = garanzia
-
-    def get_garanzia(self):
-
-        return self.__garanzia
-    
-
-class Abbigliamento(Prodotto):
-
-    def __init__(self,nome,costo_produzione,prezzo_vendita):
-
-        Prodotto.__init__(self,nome,costo_produzione,prezzo_vendita)
-        self.__materiale = ""
-
-    def set_materiale(self, materiale):
-
-        self.__materiale = materiale
-
-    def get_materiale(self):
-
-        return self.__materiale
-
-
-class Accessoristica(Prodotto):
-
-    def __init__(self,nome,costo_produzione,prezzo_vendita):
-
-        Prodotto.__init__(self,nome,costo_produzione,prezzo_vendita)
-        self.__colore = ""
-
-    def set_colore(self, colore):
-
-        self.__colore = colore
-
-    def get_colore(self):
-
-        return self.__colore
 
 def calcola_profitto(a):
     if isinstance(a, Prodotto):
@@ -99,12 +106,21 @@ def calcola_profitto(a):
     else:
         print("Tipo non supportato")
 
+def quantità(a):
+    if isinstance(a, Prodotto):
+        a.quanti()
+    else:
+        print("Tipo non supportato")
+
+
+
+
 #test
 
 fab1 = Fabbrica("Fabbrica di Prova")
 
-prodotto1 = Prodotto("Prodotto", 10, 100)
-prodotto2 = Prodotto("Prodotto2", 2, 10)
+prodotto1 = Prodotto("Prodotto1", 10, 100,5)
+prodotto2 = Prodotto("Prodotto2", 2, 10,10)
 
 pc = Elettronica("Lenovo", 100, 200)
 pc.set_garanzia(4)
@@ -135,4 +151,6 @@ fab1.stampa_inventario()
 
 calcola_profitto(prodotto1)
 calcola_profitto(occhiali)
+quantità(occhiali)
+quantità(prodotto1)
 
