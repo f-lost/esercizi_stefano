@@ -7,7 +7,7 @@ class MetodoPagamento(conto.ContoBancario):
         if isinstance(mittente, conto.ContoBancario) and isinstance(intestatario, conto.ContoBancario):
             mittente.preleva(importo)
             intestatario.deposita(importo)
-            print(f"Pagamento generico di {importo}€ verso: {intestatario}")
+            print(f"Pagamento generico di {importo}€ da {mittente.get_titolare()} verso: {intestatario.get_titolare()}")
         else:
             print("Prova a reinserire mittente e intestatario, tipi non supportati")
 
@@ -17,7 +17,7 @@ class CartaDiCredito(MetodoPagamento):
         if isinstance(mittente, conto.ContoBancario) and isinstance(intestatario, conto.ContoBancario):
             mittente.preleva(importo)
             intestatario.deposita(importo)
-            print(f"Pagamento tramite carta di credito di {importo}€ verso: {intestatario}")
+            print(f"Pagamento tramite carta di credito di {importo}€ da {mittente.get_titolare()} verso: {intestatario.get_titolare()}")
         else:
             print("Prova a reinserire mittente e intestatario, tipi non supportati")
 
@@ -30,7 +30,7 @@ class PayPal(MetodoPagamento):
         if isinstance(mittente, conto.ContoBancario) and isinstance(intestatario, conto.ContoBancario):
             mittente.preleva(importo)
             intestatario.deposita(importo)
-            print(f"Pagamento tramite PayPal di {importo}€ per: {intestatario}")
+            print(f"Pagamento tramite PayPal di {importo}€ da {mittente.get_titolare()} per: {intestatario.get_titolare()}")
         else:
             print("Prova a reinserire mittente e intestatario, tipi non supportati")
 
@@ -43,7 +43,7 @@ class BonificoBancario(MetodoPagamento):
         if isinstance(mittente, conto.ContoBancario) and isinstance(intestatario, conto.ContoBancario):
             mittente.preleva(importo)
             intestatario.deposita(importo)
-            print(f"Pagamento tramite Bonifico Bancario di {importo}€ verso il conto: {intestatario}")
+            print(f"Pagamento tramite Bonifico Bancario di {importo}€ da {mittente.get_titolare()} verso il conto: {intestatario.get_titolare()}")
         else:
             print("Prova a reinserire mittente e intestatario, tipi non supportati")
 
@@ -62,19 +62,14 @@ class GestorePagamenti:
 
 #test
 conto1 = conto.ContoBancario()
-
 conto1.set_titolare("Stefano")
-
 conto1.set_saldo(100)
 
 conto2 = conto.ContoBancario()
-conto1.set_titolare("Riccardo")
-
-conto1.set_saldo(100)
+conto2.set_titolare("Riccardo")
+conto2.set_saldo(100)
 
 metodo1 = MetodoPagamento()
-print(isinstance(metodo1, MetodoPagamento))
-
 metodo2 = PayPal()
 
 metodo1.effettua_pagamento(conto1, 50, conto2)
