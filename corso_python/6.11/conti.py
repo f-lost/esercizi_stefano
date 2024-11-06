@@ -1,4 +1,4 @@
-import conto
+import modulo_conti_bancari as conto
 
 
 class MetodoPagamento(conto.ContoBancario):
