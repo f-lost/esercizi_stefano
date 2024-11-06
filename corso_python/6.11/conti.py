@@ -11,6 +11,7 @@ class MetodoPagamento(conto.ContoBancario):
         else:
             print("Prova a reinserire mittente e intestatario, tipi non supportati")
 
+
 class CartaDiCredito(MetodoPagamento):
 
     def effettua_pagamento(self, mittente, importo, intestatario):
@@ -22,8 +23,6 @@ class CartaDiCredito(MetodoPagamento):
             print("Prova a reinserire mittente e intestatario, tipi non supportati")
 
         
-
-
 class PayPal(MetodoPagamento):
 
     def effettua_pagamento(self, mittente, importo, intestatario):
@@ -35,8 +34,6 @@ class PayPal(MetodoPagamento):
             print("Prova a reinserire mittente e intestatario, tipi non supportati")
 
         
-
-
 class BonificoBancario(MetodoPagamento):
 
     def effettua_pagamento(self, mittente, importo, intestatario):
@@ -46,7 +43,6 @@ class BonificoBancario(MetodoPagamento):
             print(f"Pagamento tramite Bonifico Bancario di {importo}€ da {mittente.get_titolare()} verso il conto: {intestatario.get_titolare()}")
         else:
             print("Prova a reinserire mittente e intestatario, tipi non supportati")
-
 
 
 class GestorePagamenti:
@@ -60,6 +56,7 @@ class GestorePagamenti:
 
 
 
+
 #test
 conto1 = conto.ContoBancario()
 conto1.set_titolare("Stefano")
@@ -69,13 +66,17 @@ conto2 = conto.ContoBancario()
 conto2.set_titolare("Riccardo")
 conto2.set_saldo(100)
 
+
 metodo1 = MetodoPagamento()
-metodo2 = PayPal()
+metodo2 = CartaDiCredito()
+metodo3 = PayPal()
+metodo4 = BonificoBancario()
+
 
 metodo1.effettua_pagamento(conto1, 50, conto2)
 conto1.visualizza_saldo()
 
 gestore = GestorePagamenti()
-
-gestore.effettua_pagamento(conto1, 50, conto2, metodo2)
+gestore.effettua_pagamento(conto1, 50, conto2, metodo1)
+gestore.effettua_pagamento(conto2, 50, conto1, metodo2)
 conto2.visualizza_saldo()
