@@ -170,6 +170,7 @@ class Barca(Veicolo):
 
     #Metodo proprio della classe Barca
     def accendi_motore(self):
+        
         if self._tipo.lower() == "motore":
             print("Il motore è acceso.")
         else:
@@ -177,6 +178,7 @@ class Barca(Veicolo):
 
     #Metodo astratto che eredita dalla classe Veicolo
     def metodo_specifico(self):
+
         print("La barca fa qualcosa")
 
 
