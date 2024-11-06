@@ -21,21 +21,25 @@ Classi Derivate:
 Auto:
 Attributi aggiuntivi come _numero_porte
 Metodo specifico come suona_clacson()
+metodo astratto specifico
 
 #Cosimo
 Furgone:
 Attributi per _capacità_carico
 Metodo per carica() e scarica()
+metodo astratto specifico
 
 #Roberta
 Motocicletta:
 Attributo per _tipo (e.g., sportiva, touring)
 Metodo per esegui_wheelie() se il tipo è sportivo
+metodo astratto specifico
 
 #Roberta
 Barca:
-Attributo _cavalli (cavalli del motore)
-Metodo _attracca (bool: attraccata o no)
+Attributo _tipo (motore/non motore)
+Metodo _accendi_motore 
+metodo astratto specifico
 
 #Stefano
 Classe GestoreParcoVeicoli:
@@ -170,7 +174,7 @@ class Barca(Veicolo):
 
     #Metodo proprio della classe Barca
     def accendi_motore(self):
-        
+
         if self._tipo.lower() == "motore":
             print("Il motore è acceso.")
         else:
