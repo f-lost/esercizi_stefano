@@ -112,6 +112,17 @@ def quantità(a):
     else:
         print("Tipo non supportato")
 
+def stampa_caratteristica(prodotto):
+    caratteristiche = {"garanzia","materiale","colore"}
+    for caratteristica in caratteristiche:
+        metodo = f"get_{caratteristica}"
+        
+
+        if hasattr(prodotto, metodo):
+            valore = getattr(prodotto, metodo)() 
+            print(f"{prodotto.nome} ha {caratteristica}: {valore}")
+            break  
+
 
 
 
@@ -153,4 +164,7 @@ calcola_profitto(prodotto1)
 calcola_profitto(occhiali)
 quantità(occhiali)
 quantità(prodotto1)
+
+stampa_caratteristica(occhiali)
+stampa_caratteristica(maglietta)
 
