@@ -86,56 +86,67 @@ class Veicolo(ABC):
 
 class Auto(Veicolo):
 
+    #Metodo Costruttore
     def __init__(self,marca, modello, anno,colore,numero_porte):
 
         super().__init__(marca, modello, anno)
         self.colore = colore
         self.numero_porte = numero_porte
 
+    #Metodo proprio della classe Auto
     def suona_clacson(self):
         print("Stai suonando il clacson")
 
+    #Metodo astratto che eredita dalla classe Veicolo
     def metodo_specifico(self):
         print("L'auto fa qualcosa")
 
+    #Metodo proprio della classe Auto
     def info_veicolo(self):
         print(f"L'auto che stai guidando è di colore {self.colore} ed ha {self.numero_porte} porte")
 
 
 class Furgone(Veicolo):
 
+    #Metodo Costruttore
     def __init__(self,marca, modello, anno,colore,capacita_carico):
 
         super().__init__(marca, modello, anno)
         self.colore = colore
         self.capacita_carico = capacita_carico
 
+    #Metodo proprio della classe Furgone
     def carica(self,peso):
         if peso > self.capacita_carico:
             print("Il peso da lei selezionato è troppo grande")
         else:
             print(f"Caricati {peso}kg di merce")
 
+    #Metodo proprio della classe Furgone
     def scarica(self):
         if self.capacita_carico > 0:
             print("Stai scaricando")
         else:
             print("Non hai nulla da scaricare")
 
+    #Metodo astratto che eredita dalla classe Veicolo
     def metodo_specifico(self):
         print("Il furgone fa qualcosa")
 
+    #Metodo proprio della classe Furgone
     def info_veicolo(self):
         print(f"Il furgone che stai guidando è di colore {self.colore} ed ha una capacità di carico di {self.capacita_carico}kg")
 
 
 class Motocicletta(Veicolo):
 
+    #Metodo Costruttore
     def __init__(self,marca, modello, anno, tipo):
         
         super().__init__(marca, modello, anno)        
         self._tipo = tipo
 
+    #Metodo proprio della classe Motocicletta
     def esegui_wheelie(self):
 
         if self._tipo.lower() == "sportiva":
@@ -143,6 +154,7 @@ class Motocicletta(Veicolo):
         else:
             print(f"{self._modello} non è adatta per un wheelie.")
 
+    #Metodo astratto che eredita dalla classe Veicolo
     def metodo_specifico(self):
 
         print("La motocicletta fa qualcosa")
@@ -150,38 +162,45 @@ class Motocicletta(Veicolo):
 
 class Barca(Veicolo):
 
+    #Metodo Costruttore
     def __init__(self,marca, modello, anno, tipo):
        
         super().__init__(marca, modello, anno)
         self._tipo = tipo
 
+    #Metodo proprio della classe Barca
     def accendi_motore(self):
         if self._tipo.lower() == "motore":
             print("Il motore è acceso.")
         else:
             print("è una barca a vela e non ha un motore da accendere.")
 
+    #Metodo astratto che eredita dalla classe Veicolo
     def metodo_specifico(self):
         print("La barca fa qualcosa")
 
 
 class GestoreParcoVeicoli:
 
+    #Metodo Costruttore
     def __init__(self, nome):
 
         self._veicoli = []
         self.nome = nome
 
+    #Metodo aggiungi veicolo incapsulato
     def __aggiungi_veicolo(self, veicolo):
         
         self._veicoli.append(veicolo)
         tipo_veicolo = veicolo.__class__.__name__
         print(f"{tipo_veicolo} aggiunto al parco veicoli '{self.nome}'.")
     
+    #Metodo da richiamare 
     def aggiungi_veicolo(self, veicolo):
 
         self.__aggiungi_veicolo(veicolo)
 
+    #Metodo rimuovi veicolo incapsulato
     def __rimuovi_veicolo(self, veicolo):
 
         if veicolo in self._veicoli:
@@ -193,10 +212,12 @@ class GestoreParcoVeicoli:
         else:
             print(f"{tipo_veicolo} non presente nel parco veicoli '{self.nome}' ")
 
+    #Metodo da richiamare
     def rimuovi_veicolo(self, veicolo):
 
         self.__rimuovi_veicolo(veicolo)
 
+    #Metodo per stampare tutti i veicoli
     def lista_veicoli(self):
 
         print(f"L'intero parco veicoli '{self.nome}' è composto da:")
@@ -205,6 +226,7 @@ class GestoreParcoVeicoli:
 
 
 
+#test
 auto = Auto("Audi","A4", 2010, "rossa",4)
 furgone = Furgone("Mercedes","Boh",2010,"bianco",10)
 moto = Motocicletta("BMW", "Boh",2010,"sportiva")
