@@ -235,6 +235,7 @@ class GestoreParcoVeicoli:
 
 
 
+
 #test
 auto = Auto("Audi","A4", 2010, "rossa",4)
 furgone = Furgone("Mercedes","Boh",2010,"bianco",10)
