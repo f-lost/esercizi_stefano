@@ -55,3 +55,5 @@ muratore = Muratore("Mario", 30)
 
 pittore.usa_strumento()
 muratore.usa_strumento()
+pittore.lavora()
+muratore.lavora()
