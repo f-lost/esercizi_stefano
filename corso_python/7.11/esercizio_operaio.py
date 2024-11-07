@@ -12,18 +12,25 @@ class Operaio:
         print(f"{self.nome} sta lavorando...")
 
 
-class Cazzuola(ABC):
-    
+class Strumento(ABC):
+
     @abstractmethod
-    def spalma_malta(self):
+    def usa_strumento(self):
         pass
 
 
-class Pennello(ABC):
+class Cazzuola(Strumento):
     
-    @abstractmethod
-    def pitta(self):
-        pass
+    def usa_strumento(self):
+        
+        print(f"sto spalmando la malta")
+
+
+class Pennello(Strumento):
+    
+    def usa_strumento(self):
+        
+        print(f"sto pittando")
     
 
 class Muratore(Operaio, Cazzuola):
@@ -31,11 +38,6 @@ class Muratore(Operaio, Cazzuola):
     def __init__(self, nome, età):
         
         super().__init__(nome, età)
-
-    def spalma_malta(self):
-        
-        print(f"{self.nome} sta spalmando la malta")
-
     
 
 class Pittore(Operaio, Pennello):
@@ -44,6 +46,12 @@ class Pittore(Operaio, Pennello):
         
         super().__init__(nome, età)
 
-    def pitta(self):
 
-        print(f"{self.nome} sta pittando")
+
+#test
+
+pittore = Pittore ("Luigi", 25)
+muratore = Muratore("Mario", 30)
+
+pittore.usa_strumento()
+muratore.usa_strumento()
