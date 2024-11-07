@@ -95,8 +95,12 @@ class SousChef(PersonaleCucina):
 
         super().__init__(nome, età)
 
-    def gestisci_inventario(self):
-        pass
+    def gestisci_inventario(self, ristorante):
+        
+        for i in ristorante.menù:
+            
+            pass #gestione inventario non fatta
+
 
     def lavora(self, piatto):
 
@@ -150,7 +154,7 @@ class Cliente():
 
             self.__set_ordinazioni(piatto)
 
-            ristorante.ricevi_ordinazioni(self.__get_ordinazioni()[-1])
+            ristorante.ricevi_ordinazione(self.__get_ordinazioni()[-1])
 
     
 class Ristorante():
@@ -159,8 +163,9 @@ class Ristorante():
 
         self.__nome = nome
         self.menù = {"pasta al sugo":["pasta", "pomodori", "cipolla", "basilico", "parmigiano"], "cotoletta": ["pangrattato", "uovo", "carne"], "minestrone": ["carote", "cipolle", "patate", "pomodori", "fagioli","broccoli"]}
-        self.ordinazioni = []
+        self.__ordinazioni = []
         self.__brigata = brigata
+        self.__inventario = []
 
     def __get_nome(self):
 
@@ -170,6 +175,18 @@ class Ristorante():
 
         return self.__brigata
     
+    def _get_inventario(self):
+
+        return self.__inventario
+    
+    def __get_ordinazioni(self):
+
+        return self.__ordinazioni
+    
+    def __set_ordinazione(self, nuova_ordinazione):
+
+        self.__ordinazioni.append(nuova_ordinazione)
+
     def aggiungi_piatto(self, piatto, ingredienti):
 
         self.menù[piatto] = ingredienti
@@ -189,14 +206,14 @@ class Ristorante():
 
         pprint.pprint(self.menù)
     
-    def ricevi_ordinazioni(self, ordinazioni):
+    def ricevi_ordinazione(self, ordinazione):
 
-        nuova_ordinazione = [ordinazioni, 0] #0 perchè il piatto non è stato preparato
-        self.ordinazioni.append(nuova_ordinazione)
+        nuova_ordinazione = [ordinazione, 0] #0 perchè il piatto non è stato preparato
+        self.__set_ordinazione(nuova_ordinazione)
 
     def manda_in_preparazione(self):
 
-        for i in self.ordinazioni:
+        for i in self.__get_ordinazioni():
 
             if i[1] == 0:
 
@@ -211,9 +228,9 @@ class Ristorante():
                     elemento_brigata = next((elem for elem in self.__get_brigata() if elem.__class__.__name__ == "SousChef"), "Non c'è un SousChef che possa prepararti il piatto.")
                     elemento_brigata.lavora(i[0])
 
-                elif i[0] == "cotoletta":
+                elif i[0] == "minestrone":
 
-                    elemento_brigata = next((elem for elem in self.__get_brigata() if elem.__class__.__name__ == "CucocoLinea"), "Non c'è un Cuoco di linea che possa prepararti il piatto.")
+                    elemento_brigata = next((elem for elem in self.__get_brigata() if elem.__class__.__name__ == "CuocoLinea"), "Non c'è un Cuoco di linea che possa prepararti il piatto.")
                     elemento_brigata.lavora(i[0])
                 
                 else:
@@ -242,6 +259,8 @@ cliente = Cliente("Bob")
 
 cliente.chiedi_menù(ristorante)
 cliente.ordina(ristorante, "pasta al sugo")
+cliente.ordina(ristorante, "cotoletta")
+cliente.ordina(ristorante, "minestrone")
 
 ristorante.manda_in_preparazione()
 
