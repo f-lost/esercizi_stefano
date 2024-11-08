@@ -10,7 +10,6 @@ class Array():
     def slicing(self, inizio, fine, passo = 1):
 
         print(self.array[inizio : fine : passo])
-
         return self.array[inizio : fine : passo]
 
     def modifica(self, inizio, fine, valore):
@@ -26,18 +25,18 @@ class Array():
         print(array)
 
 
+
+
+#test
+
 mainarray = Array(10, 51, 20)
 
 mainarray.stampa()
 
 arr1 = mainarray.slicing(0, 11)
-
 arr2 = mainarray.slicing(-5, 50)
-
 arr3 = mainarray.slicing(5, 15)
-
 arr4 = mainarray.slicing(0 , 50 , 3)
-
 
 mainarray.modifica(5, 10, 99)
 
