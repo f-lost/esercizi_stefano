@@ -12,7 +12,22 @@ MASSIMO 10 funzionalità (livelli di difficoltà)
 classifica salvata
 '''
 
-import pprint
+import pprint, random
+
+#Classe Menù
+class Menù:
+    def init(self):
+        self.registrato = False
+        self.options = {
+            "1 -": "Registrati come nuovo utente",
+            "2 -": "Inizia il gioco",
+            "3 -": "Visualizza classifica",
+            "4 -": "Guida ai giochi",
+            "5 -": "Impostazioni profilo",
+            "6 -": "Seleziona difficoltà",
+            "7 -": "Visualizza record personali",
+            "8 -": "Esci"
+            }
 
 
 class Utente:
@@ -65,6 +80,38 @@ class Classifica:
 
         pprint.pprint(self.__get_classifica())
 
+
+class Gioco:
+    def init(self, nome):
+        self.nome = nome
+
+ 
+class IndovinaIlNumero(Gioco):
+
+    def init(self):
+        super().init("Indovina il Numero")
+
+    def start(self):
+        numero_segreto = random.randint(1, 100)
+        tentativi = 0
+        print("Benvenuto a 'Indovina il Numero'!")
+        while True:
+            tentativo = int(input("Indovina il numero (1-100): "))
+            tentativi += 1
+            if tentativo < numero_segreto:
+                print("Troppo basso!")
+            elif tentativo > numero_segreto:
+                print("Troppo alto!")
+                print(numero_segreto)
+            else:
+                print(f"Complimenti! Hai indovinato il numero in {tentativi} tentativi.")
+                break
+
+
+
+#Esempio di utilizzo
+gioco1 = IndovinaIlNumero()
+gioco1.start()
 
 
 
