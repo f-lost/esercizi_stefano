@@ -43,5 +43,5 @@ print(arr_2d[:, 1:3])  # Output: [[ 2  3]
                        #          [ 6  7]
                        #          [10 11]]
 # Slicing misto
-print(arr_2d[1:3, 1:3])  # Output: [[ 6  7]
+print(arr_2d[1:, 1:3])  # Output: [[ 6  7]
                         #          [10 11]]
