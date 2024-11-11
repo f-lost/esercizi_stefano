@@ -10,14 +10,15 @@ import random
 def genera_e_salva():
 
     numeri_casuali = []
+    stringa = ""
 
     for i in range(5):
         numero = random.randint(0,10)
         numeri_casuali.append(numero)
-        
+        stringa += str(numero) + ","
 
-        with open("numeri_casuali.txt", "a") as file:
-            file.write(str(numero) + ",")
+    with open("numeri_casuali.txt", "a") as file:
+        file.write(stringa)
 
     return numeri_casuali
 
