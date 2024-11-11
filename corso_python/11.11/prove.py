@@ -9,4 +9,5 @@ for riga in righe[1:]:
 
 #righe = righe.split(",")
 
-print(righe)
+#print(righe)
+
