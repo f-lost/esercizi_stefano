@@ -8,6 +8,7 @@ Nunc laoreet massa nec lacus dapibus, sed ultricies magna fringilla. Suspendisse
 
 Sed ut feugiat felis. Duis facilisis mi ut eros congue convallis. Aenean rutrum vehicula arcu et dapibus. Donec pharetra augue ac orci pulvinar dapibus. Ut volutpat metus id metus dictum rhoncus vitae ac metus. Ut dapibus est nibh, nec sodales magna tempor et. Morbi ullamcorper facilisis ullamcorper. Vestibulum purus est, pretium et consectetur et, feugiat a sapien.
 '''
+
 with open("lorem.txt", "w") as file:
 
     file.write(testo)
@@ -31,13 +32,13 @@ paragrafi = list(filter(controlla, testo_letto.split("\n")))
 
 print(f"Il numero di paragrafi è {len(paragrafi)}")
 
-lunghezza = 0
+numero_parole= 0
 caratteri = 0
 
 for paragrafo in paragrafi:
 
     parole = list(filter(controlla, paragrafo.split(" ")))
-    lunghezza += len(parole)
+    numero_parole += len(parole)
 
     for parola in parole:
 
@@ -47,7 +48,7 @@ for paragrafo in paragrafi:
 
 
 
-print(f"Il numero di parole è {lunghezza}")
+print(f"Il numero di parole è {numero_parole}")
 
 print(f"Il numero di caratteri è {caratteri}")
 
