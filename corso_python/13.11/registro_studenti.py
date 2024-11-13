@@ -13,6 +13,7 @@ def inserisci_studente():
     query = "insert into studenti (nome, cognome, italiano, matematica) values (%s, %s, %s, %s)"
     mycursor.execute(query, valore)
     mydb.commit()
+    print(mycursor.rowcount, "Studenti inseriti")
 
        
 def elimina_studente():
@@ -23,18 +24,20 @@ def elimina_studente():
     query = "delete from studenti where nome = %s and cognome = %s  "
     mycursor.execute(query, valore)
     mydb.commit()
+    print(mycursor.rowcount, "Studenti eliminati")
 
 
 def modifica_voto():
 
     nome = input("Inserisci il nome dello studente: ")
     cognome = input("Inserisci il cognome dello studente: ")
-    italiano = int(input("Inserisci un voto per italiano: "))
-    matematica = int(input("Inserisci un voto per matematica: "))
+    italiano = float(input("Inserisci un voto per italiano: "))
+    matematica = float(input("Inserisci un voto per matematica: "))
     valore = (italiano, matematica, nome, cognome)
     query = "update studenti set italiano = %s, matematica = %s where nome = %s and cognome = %s"
     mycursor.execute(query, valore)
     mydb.commit()
+    print(mycursor.rowcount, "Voti modificati")
 
 def stampa():
 
@@ -77,7 +80,7 @@ mydb = mysql.connector.connect(
 )
 
 mycursor = mydb.cursor()
-query = "create table if not exists studenti (id int auto_increment primary key, nome varchar(50), cognome varchar(50), italiano int, matematica int)"
+query = "create table if not exists studenti (id int auto_increment primary key, nome varchar(50), cognome varchar(50), italiano float, matematica float)"
 mycursor.execute(query)
 
 # Creazione del menu e aggiunta degli elementi
