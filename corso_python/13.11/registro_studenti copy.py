@@ -2,8 +2,6 @@ from modulo_menu import Menu, Elemento, Azione
 import mysql.connector
 
 
-
-
 # Definizione delle azioni di esempio
 def inserisci_studente():
 
@@ -18,6 +16,7 @@ def inserisci_studente():
 
        
 def elimina_studente():
+
     nome = input("Inserisci il nome dello studente: ")
     cognome = input("Inserisci il cognome dello studente: ")
     valore = (nome, cognome)
@@ -27,6 +26,7 @@ def elimina_studente():
 
 
 def modifica_voto():
+
     nome = input("Inserisci il nome dello studente: ")
     cognome = input("Inserisci il cognome dello studente: ")
     italiano = int(input("Inserisci un voto per italiano: "))
