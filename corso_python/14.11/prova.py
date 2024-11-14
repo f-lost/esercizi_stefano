@@ -5,9 +5,10 @@ import hashlib
 
 
 
-query = "select * from voti join studenti on voti.id = studenti.id where studenti.id in select utenti.id from studenti join utenti on studenti.id = utenti.id where utenti.username = " + username
+#query = "select * from voti join studenti on voti.id = studenti.id where studenti.id in select utenti.id from studenti join utenti on studenti.id = utenti.id where utenti.username = " + username
 # Definizione delle azioni
 
+#FUNZIONI GENERALI
 def registrazione():
     username = input("Inserisci l'username: ").lower()
     query = "select id from utenti where username = %s"
@@ -48,10 +49,7 @@ def registrazione():
             valori = (studente[0], username, password, 0)
             mycursor.execute(query, valori)
             mydb.commit()
-
-    
-
-
+ 
 def effettua_login():
     username = input("Inserisci l'username: ").lower()
     query = "select id from utenti where username = %s"
@@ -60,58 +58,64 @@ def effettua_login():
 
     if utente:
 
-        
+        password = input("Inserisci la password: ").lower()
+        password_criptata = hashlib.md5(password.encode()).hexdigest()
+        query = "select password from utenti where username = %s"
+        mycursor.execute(query, username)
+        password_salvata = mycursor.fetchone()
+        if password_criptata == password_salvata:
+            print("Login effettuato con successo!")
+            query = "select isadmin from utenti where username = %s"
+            mycursor.execute(query, username)
+            isadmin = mycursor.fetchone()
 
-    else:
+            if isadmin:
 
-        print("Utente già registrato.")
+                menu_admin.mostra_menu()
 
-        nome = input("Inserisci il nome dello studente: ").lower()
-        cognome = input("Inserisci il cognome dello studente: ").lower()
-        valore = (nome, cognome)
-        query = "select id from studenti where nome = %s and cognome = %s"
-        mycursor.execute(query, valore)
-        studente = mycursor.fetchone()
+            else:
 
-        if studente:
+                menu_utente.mostra_menu()
 
-            print(f"Studente associato a {username} già esistente.")
 
         else:
 
-            query = "insert into studenti (nome, cognome) values (%s, %s)"
-            mycursor.execute(query, valore)
-            mydb.commit()
-            query = "select id from studenti where nome = %s and cognome = %s"
-            mycursor.execute(query, valore)
-            mydb.commit()
-            studente = mycursor.fetchone()
+            print("Password errata. Riprovare.")
 
-            print(f"Studente {nome} {cognome} inserito.")
-            password = input("Inserisci una password: ").lower()
-            password_criptata = hashlib.md5(password.encode()).hexdigest()
-            query = "insert into utenti (id, username, password, isadmin) values (%s, %s, %s, %s)"
-            valori = (studente[0], username, password, 0)
-            mycursor.execute(query, valori)
-            mydb.commit()
-    
+    else:
 
+        print("Utente non trovato.")
 
-def inserisci_studente():
+#FUNZIONI PER ADMIN
+def inserisci_studente_utente():
 
     nome = input("Inserisci il nome dello studente: ").lower()
     cognome = input("Inserisci il cognome dello studente: ").lower()
     valore = (nome, cognome)
     query = "select id from studenti where nome = %s and cognome = %s"
     mycursor.execute(query, valore)
-    studente = mycursor.fetchone()
-    if studente:
+    id_studente = mycursor.fetchone()
+    if id_studente:
        print("Studente già esistente.")
     else:
+        username = cognome[:4] + nome[:4]
+        password = password = username[0] + "1" + username[2] + "2" + username[4] + "3" + username[6] + "4"
+        password_criptata = hashlib.md5(password.encode()).hexdigest()
         query = "insert into studenti (nome, cognome) values (%s, %s)"
         mycursor.execute(query, valore)
         mydb.commit()
         print(f"Studente {nome} {cognome} inserito.")
+
+        query = "select id from studenti where nome = %s and cognome = %s"
+        mycursor.execute(query, valore)
+        mydb.commit()
+        id_studente = mycursor.fetchone() 
+
+        query = "insert into utenti (id, username, password, isadmin) values (%s, %s, %s, %s)"
+        valore = (id_studente[0], username, password_criptata, 0)
+        mycursor.execute(query, valore)
+        mydb.commit()
+        print(f"Utente {username} inserito.")
 
 def elimina_studente():
 
@@ -120,14 +124,23 @@ def elimina_studente():
     valore = (nome, cognome)
     query = "select id from studenti where nome = %s and cognome = %s"
     mycursor.execute(query, valore)
-    studente = mycursor.fetchone()
-    if studente:
-        query = "delete from studenti where nome = %s and cognome = %s  "
+    id_studente = mycursor.fetchone()
+    if id_studente:
+        query ="select username from utenti where id = %s"
+        mycursor.execute(query, id_studente)
+        username = mycursor.fetchone()
+        query = "delete from studenti where nome = %s and cognome = %s "
         mycursor.execute(query, valore)
         mydb.commit()
         print(f"Studente {nome} {cognome} eliminato.")
+        print(f"Utente {username} eliminato.")
     else:
         print("Studente non trovato.")
+
+def rendi_admin():
+    username = input("Inserisci username: ")
+    query = "update utenti set isadmin = true where utenti.id = select utenti.id from utenti join studenti on utenti.id = studenti.id where utenti.username = %s"
+    mycursor.execute(query, username)
 
 def modifica_voto():
 
@@ -148,10 +161,19 @@ def modifica_voto():
     else:
         print("Studente non trovato.")
 
-def stampa():
+def stampa_studenti():
 
     #query = "SELECT CASE WHEN ( (SELECT isadmin from utenti) not false ) THEN select studenti.nome, studenti.cognome, voti.materia, voti.voto from studenti join voti on studenti.id = voti.id ELSE select 1 from dual where false END"
     query = "select studenti.nome, studenti.cognome, voti.materia, voti.voto from studenti join voti on studenti.id = voti.id"
+    mycursor.execute(query)
+    risultati = mycursor.fetchall()
+    for riga in risultati:
+        print(riga)
+
+def stampa_utenti():
+
+    #query = "SELECT CASE WHEN ( (SELECT isadmin from utenti) not false ) THEN select studenti.nome, studenti.cognome, voti.materia, voti.voto from studenti join voti on studenti.id = voti.id ELSE select 1 from dual where false END"
+    query = "select username, nome, cognome, isadmin from utenti join studenti on utenti.id = studenti.id"
     mycursor.execute(query)
     risultati = mycursor.fetchall()
     for riga in risultati:
@@ -179,6 +201,28 @@ def media():
     else:
         print("Studente non trovato.")
 
+#FUNZIONI PER UTENTI NON ADMIN
+def media():
+
+    nome = input("Inserisci il nome dello studente: ").lower()
+    cognome = input("Inserisci il cognome dello studente: ").lower()
+    valore = (nome, cognome)
+    query = "select id from studenti where nome = %s and cognome = %s"
+    mycursor.execute(query, valore)
+    studente = mycursor.fetchone()
+    if studente:
+        id = studente[0]
+        materia = input("Inserisci la materia: ").lower()
+        query = "select voto from voti where id = %s and materia = %s"
+        mycursor.execute(query, (id, materia))
+        voti = mycursor.fetchall()
+        if voti:
+            media_voti = round(sum(v[0] for v in voti) / len(voti), 2)
+            print(f"La media di {nome} {cognome} in {materia} è: {media_voti}.")
+        else:
+            print("Nessun voto trovato per questa materia.")
+    else:
+        print("Studente non trovato.")
 
 
 
@@ -211,7 +255,6 @@ query = "create table if not exists utenti (id_utenti auto_increment primary key
 mycursor.execute(query)
 
 
-
 # Initialzza sistemi e menu
 sistema_login = SistemaLogin()
 menu_iniziale = Menu()
@@ -223,12 +266,13 @@ menu_iniziale.aggiungi_elemento(Elemento("Login", Azione(effettua_login)))
 # Costruzione del menù dopo il login
 
 menu_admin = Menu()
-elemento1_admin = Elemento("Inserisci Studente", Azione(inserisci_studente))
-elemento2_admin = Elemento("Inserisci Utente", Azione(inserisci_utente))
+elemento1_admin = Elemento("Inserisci Studente", Azione(inserisci_studente_utente))
+elemento2_admin = Elemento("Elimina Studente", Azione(elimina_studente))
 elemento3_admin = Elemento("Inserisci Voto", Azione(modifica_voto))
-elemento4_admin = Elemento("Elimina Studente", Azione(elimina_studente))
-elemento5_admin = Elemento("Calcola Media", Azione(media))
-elemento6_admin = Elemento("Stampa Registro", Azione(stampa))
+elemento4_admin = Elemento("Calcola Media", Azione(media))
+elemento5_admin = Elemento("Stampa Registro Studenti", Azione(stampa_studenti))
+elemento6_admin = Elemento("Stampa Registro Utentu", Azione(stampa_utenti))
+elemento7_admin = Elemento("Rendi Admin", Azione(rendi_admin))
 
 menu_admin.aggiungi_elemento(elemento1_admin)
 menu_admin.aggiungi_elemento(elemento2_admin)
@@ -236,11 +280,13 @@ menu_admin.aggiungi_elemento(elemento3_admin)
 menu_admin.aggiungi_elemento(elemento4_admin)
 menu_admin.aggiungi_elemento(elemento5_admin)
 menu_admin.aggiungi_elemento(elemento6_admin)
+menu_admin.aggiungi_elemento(elemento7_admin)
+
 
 
 menu_utente = Menu()
-elemento1_utente = Elemento("Calcola Media", Azione(media))
-elemento2_utente = Elemento("Stampa Registro", Azione(stampa))
+elemento1_utente = Elemento("Calcola Media", Azione(media_utente))
+elemento2_utente = Elemento("Stampa Registro", Azione(stampa_voti_studente))
 
 # Mostra il menù iniziale
 menu_iniziale.mostra_menu()
