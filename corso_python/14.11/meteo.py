@@ -6,7 +6,7 @@ def coordinate_città(città_nome):
     
     response = requests.get(url)
     data = response.json()
-    print("GPS", data)
+    #print("GPS", data)
 
     if 'results' in data and data['results']:
         città_data = data['results'][0]
@@ -18,7 +18,6 @@ def coordinate_città(città_nome):
         print("Città non trovata.")
         return None, None
 
-    return None, None
     
 
 precipitazioni = ""
