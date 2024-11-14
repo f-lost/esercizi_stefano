@@ -1,21 +1,21 @@
 import hashlib
 
+password = "admin"
+password_criptata = hashlib.md5(password.encode()).hexdigest()
 
-result = hashlib.md5("ciao".encode()).hexdigest()
-
-print("prova",result)
-
-
-passdaverificare = "ciao"
-risultatoquery = "xxxxxxxxxxx"
-result = hashlib.md5(passdaverificare.encode()).hexdigest()
-
-print(risultatoquery == result)
+print("prova",password_criptata)
 
 
-#esempio inserimento
+# passdaverificare = "ciao"
+# risultatoquery = "xxxxxxxxxxx"
+# result = hashlib.md5(passdaverificare.encode()).hexdigest()
 
-nome = "stefano"
-password = "password"
+# print(risultatoquery == result)
 
-passcript = hashlib.md5(password.encode()).hexdigest() #e si salva questa nel database
+
+# #esempio inserimento
+
+# nome = "stefano"
+# password = "password"
+
+# passcript = hashlib.md5(password.encode()).hexdigest() #e si salva questa nel database
