@@ -3,29 +3,58 @@ from pprint import pprint
 
 class Pokedex():
 
+    def __init__(self,nome = "Pokedex"):
+
+        self.nome = nome
+        self.pokedex = self.carica_pokedex()
+
+    def aggiungi_pokemon(self, pokemon_selvatico):
+        
+        for elemento in self.pokedex:
+
+            if pokemon_selvatico.id not in elemento:
+                        
+                self.pokedex[pokemon_selvatico.id] = {"nome" : pokemon_selvatico.nome,
+                                    "hp": pokemon_selvatico.hp,
+                                    "abilità" : pokemon_selvatico.abilità,
+                                    "xp" : pokemon_selvatico.xp,
+                                    "altezza" : pokemon_selvatico.altezza,
+                                    "peso" : pokemon_selvatico.peso,
+                                    "abilità_attiva" : pokemon_selvatico.abilità_attiva,
+                                    "attacco" : pokemon_selvatico.attacco,
+                                    "difesa" : pokemon_selvatico.difesa}
+                print(f"{pokemon_selvatico.nome} aggiunto al {self.nome}!")
 
 
     def pokemon_iniziale(self):
-        id = random.randint(1,1025)
-        url = f"https://pokeapi.co/api/v2/pokemon/{id}"
-        if id not in pokedex:
-                    
-            pokedex[id] = random_pokemon
 
-    def cattura_pokemon(self, pokemon):
+
+        if self.pokedex != {}:
+
+            id = random.randint(1,1025)
+            pokemon = Pokemon(id)
+
+            if id not in self.pokedex:
+                        
+                self.pokedex[id] = {"nome" : pokemon.nome,
+                                    "hp": pokemon.hp,
+                                    "abilità" : pokemon.abilità,
+                                    "xp" : pokemon.xp,
+                                    "altezza" : pokemon.altezza,
+                                    "peso" : pokemon.peso,
+                                    "abilità_attiva" : pokemon.abilità_attiva,
+                                    "attacco" : pokemon.attacco,
+                                    "difesa" : pokemon.difesa}
+
+    def cattura_pokemon(self, pokemon_selvatico, scelta):
 
         if scelta == "y":
-            if id in pokedex:
 
-                print("Pokemon già catturato.")
-
-            else:
-                
-                    pokedex[id] = random_pokemon
+            self.aggiungi_pokemon(self, pokemon_selvatico)
 
         else:
             
-            print(f"{random_pokemon['nome']} va via.")
+            print(f"{pokemon_selvatico.nome} va via.")
 
     def carica_pokedex():
     
@@ -37,7 +66,7 @@ class Pokedex():
             return pokedex
         
         except:
-            print("File pokedex non trovato.") 
+            print("File pokedex non trovato, creazione in corso.") 
             pokedex = {}
             print("File pokedex creato.")
 
@@ -59,13 +88,11 @@ class Gioco():
     def show_random_pokemon():
 
         id = random.randint(1,1025)
-        pokemon = Pokemon(id)
-        print(f"{pokemon.nome} è apparso!")
-        scelta = input("Vuoi catturarlo?: ").lower()
+        pokemon_selvatico = Pokemon(id)
+        print(f"{pokemon_selvatico.nome} è apparso!")
+        scelta = input("Vuoi provare a catturarlo?: ").lower()
 
-        
-
-        return pokemon
+        return scelta
 
         
     def inizia_battaglia(self, pokemon1, pokemon2):
@@ -82,6 +109,7 @@ class Pokemon():
         response = requests.get(url)
         data = response.json()
         self.nome = data["forms"][0]["name"]
+        self.id = id
         self.hp = data["stats"][0]["base_stats"]
         self.abilità = data["abilities"]
         self.xp = data["base_experience"]
@@ -97,10 +125,6 @@ class Pokemon():
         for i in range(self.abilità):
             if self.abilità[i]["is_hidden"] == "true":
                 self.abilità_attiva = self.abilità[i]["ability"]["name"]
-
-
-
-
 
 
 
