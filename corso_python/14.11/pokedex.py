@@ -73,14 +73,14 @@ class Pokedex():
             json.dump(self.pokedex, file)
 
     def stampa(self):
-        
+
         pprint(self.pokedex)
 
 
 class Gioco():
 
     def show_random_pokemon(self):
-        
+
         id = random.randint(1,1025)
         pokemon = Pokemon(id)
         print(f"{pokemon.nome} è apparso!")
