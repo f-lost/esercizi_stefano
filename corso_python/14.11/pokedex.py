@@ -80,14 +80,13 @@ class Pokedex():
 class Gioco():
 
     def show_random_pokemon(self):
+        
         id = random.randint(1,1025)
         pokemon = Pokemon(id)
         print(f"{pokemon.nome} è apparso!")
-        scelta = input("Vuoi catturarlo?: (y/n): ").lower()
-        if scelta == "y":
-            return pokemon
-        else:
-            return None
+
+        return pokemon
+
 
         
     def inizia_battaglia(self, nostro_pokemon, pokemon_selvatico, pokedex):
