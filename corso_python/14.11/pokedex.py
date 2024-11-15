@@ -151,11 +151,11 @@ class Pokemon():
         self.difesa =  data["stats"][2]["base_stat"]
         #self.tipo = data["types"][0]["type"]["name"]
 
-    def abilità_attive(self):
+    # def abilità_attive(self):
 
-        for i in range(self.abilità):
-            if self.abilità[i]["is_hidden"] == "true":
-                self.abilità_attiva = self.abilità[i]["ability"]["name"]
+    #     for i in range(self.abilità):
+    #         if self.abilità[i]["is_hidden"] == "true":
+    #             self.abilità_attiva = self.abilità[i]["ability"]["name"]
 
 
 
@@ -165,44 +165,3 @@ if __name__ == "__main__":
     gioco.gioca()
 
     
-
-
-
-
-##########################
-
-
-
-
-
-# id, random_pokemon = show_random_pokemon()
-
-# print(f"{random_pokemon['nome']} è apparso!")
-# scelta = input("Vuoi catturarlo?: ").lower()
-
-# if scelta == "y":
-#     if id in pokedex:
-
-#         print("Pokemon già catturato.")
-
-#     else:
-        
-#             pokedex[id] = random_pokemon
-
-# else:
-     
-#      print(f"{random_pokemon['nome']} va via.")
-
-
-# salva_pokedex(pokedex)
-
-# pprint(pokedex)
-
-
-'''menù: 1- Cerca pokemon --> pokemon selvatico = show_random_pokemon() --> Lo vuoi catturare? Y->2, N->3
-        2- avvia battaglia attacco -> scelta_pokemon_nel pokedex -->inizia_battaglia(self, nostro_pokemon, pokemon_selvatico) difesa-attacco -->
-        3- scappa --> torna inizio menù
-
-        '''
-
-
