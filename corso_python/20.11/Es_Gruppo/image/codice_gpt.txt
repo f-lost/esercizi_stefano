@@ -1,0 +1,48 @@
+def analyze_and_plot_fixed(dataframe, group_col, base_path):
+    # Lista per DataFrame filtrati e correlazioni
+    filtered_corr_list = []
+    
+    # Valori unici della colonna
+    unique_values = dataframe[group_col].unique()
+    
+    for value in unique_values:
+        # Filtra il DataFrame
+        df_filtered = dataframe[dataframe[group_col] == value]
+        
+        if df_filtered.empty:
+            continue  # Salta se il DataFrame è vuoto
+        
+        # Nome del gruppo
+        group_name = str(df_filtered[group_col].iloc[0]).replace("/", "-")  # Gestione di caratteri speciali
+        
+        # Rimuovi le colonne non necessarie
+        df_cleaned = df_filtered.drop(['brand', 'transmission', 'engine', 'fuel_type'], axis=1, errors='ignore')
+        
+        # Calcola la matrice di correlazione
+        corr_matrix = df_cleaned.corr()
+        
+        # Filtra correlazioni significative
+        filtered = corr_matrix.where(((corr_matrix > 0.3) | (corr_matrix < -0.3)) & (corr_matrix != 1)).stack()
+        filtered_corr_list.append((f'{group_col} name: {group_name}\n', filtered))
+        
+        # Crea la directory per salvare le immagini
+        save_path = os.path.join(base_path, group_col)
+        os.makedirs(save_path, exist_ok=True)
+        
+        # Plotta la heatmap
+        plt.figure(figsize=(10, 8))
+        sns.heatmap(corr_matrix, annot=True, cmap='coolwarm')
+        plt.title(f'Heatmap for {group_col}: {group_name}')
+        
+        # Salva il grafico
+        plt.savefig(f'{save_path}/{group_name}_heatmap.png', bbox_inches='tight')
+        plt.close()  # Chiudi il grafico per evitare conflitti
+        
+    return filtered_corr_list
+
+# Applica la funzione corretta
+base_path = './image'
+filtered_corr_trans = analyze_and_plot_fixed(df, 'transmission', base_path)
+filtered_corr_brands = analyze_and_plot_fixed(df, 'brand', base_path)
+filtered_corr_engines = analyze_and_plot_fixed(df, 'engine', base_path)
+filtered_corr_fuels = analyze_and_plot_fixed(df, 'fuel_type', base_path)
