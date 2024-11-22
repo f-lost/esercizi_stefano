@@ -162,3 +162,7 @@ cython_debug/
 #.idea/
 corso_python/21.11/imdb.csv
 corso_python/22.11/imdb.csv
+corso_python/22.11/Gruppo/sample_submission.csv
+corso_python/22.11/Gruppo/test.csv
+corso_python/22.11/Gruppo/train.csv
+corso_python/22.11/Esercizio/imdb.csv
