@@ -14,7 +14,7 @@ X_scaled = scaler.fit_transform(X)
 
 X_train, X_test, y_train, y_test = train_test_split(X_scaled, y, test_size=0.3, random_state=42)
 
-model = clf = DecisionTreeClassifier(random_state=42)
+model = DecisionTreeClassifier(random_state=42)
 
 model.fit(X_train, y_train)
 print(f"\nLa profondità dell'albero è: \t{model.get_depth()}\n")
