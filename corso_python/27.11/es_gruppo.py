@@ -13,11 +13,6 @@ import matplotlib.pyplot as plt
 # Caricamento del dataset
 X, y = load_digits(return_X_y= True, as_frame = True)
 
-# pipeline1 = Pipeline([
-#     ('scaler', StandardScaler()),
-#     ('pca', PCA()),
-#     ('svc', SVC())
-# ])
 
 #Scaler
 scaler = StandardScaler()
@@ -60,7 +55,7 @@ print("Parametri con pca:",random_search_pca.best_params_)
 svc.set_params(**random_search_pca.best_params_).fit(X_pca_train, y_train)
 
 #Predict
-# y_pred = svc.predict(X_test)
+y_pred = svc.predict(X_test)
 y_pred_pca = svc.predict(X_pca_test)
 
 
@@ -79,15 +74,6 @@ plt.show()
 plt.figure(figsize=(8, 6))
 plt.scatter(X_test[:, 0], X_test[:, 1], c=y_pred, cmap='viridis', marker='o', s=100, edgecolors='k', alpha=0.6)
 plt.title('Classification con SVC sul dataset Digits (con PCA per 2D)')
-plt.xlabel('Componente principale 1')
-plt.ylabel('Componente principale 2')
-plt.grid(True)
-plt.show()
-
-#Reali
-plt.figure(figsize=(8, 6))
-plt.scatter(X_pca_test[:, 0], X_pca_test[:, 1], c=y_test, cmap='viridis', marker='o', s=100, edgecolors='k', alpha=0.6)
-plt.title('Dati reali dataset Digits (con PCA per 2D)')
 plt.xlabel('Componente principale 1')
 plt.ylabel('Componente principale 2')
 plt.grid(True)
