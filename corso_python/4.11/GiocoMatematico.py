@@ -6,35 +6,40 @@ da cui creare un classifica e un logout con possibilità
 di ripetizione
 
 '''
-
 import random
 import time
+
+# Dizionario per memorizzare gli utenti
 users = {}
 
-#gioco a tempo, meno ci metti più punti fai?
-def gioco_equazioni(nome_utente):
-    print(f"Ciao {nome_utente}! In questo gioco dovrai risolvere un'equazione di primo grado. Se il risultato è con la virgola approssima alle prime due cifre significative! FAI VELOCE!")
 
+def gioco_equazioni(nome_utente):
+    """
+    Gioco per risolvere un'equazione di primo grado.
+    Il punteggio dipende dalla velocità di risoluzione.
+    """
+    print(
+        f"Ciao {nome_utente}! In questo gioco dovrai risolvere un'equazione di primo grado. "
+        f"Se il risultato è con la virgola, approssima alle prime due cifre significative! FAI VELOCE!"
+    )
+
+    # Genera l'equazione casuale (a ≠ 0)
     a = 0
     while a == 0:
-        a = random.randint(-10,10)
-
+        a = random.randint(-10, 10)
     b = random.randint(-100, 100)
 
     print(f"Risolvi l'equazione {a}x + {b} = 0 \n")
+    sol = round(-b / a, 2)
 
-    sol = round(-b/a, 2)
-    
     while True:
-        t1 = time.time()
-        #print(sol)
+        tempo_zero = time.time()  # Tempo iniziale
         x = float(input("Qual è la tua soluzione? "))
-        x=round(x, 2)
-        
-        punteggio = time.time() - t1
-        punteggio = round(punteggio, 3)
-        if x  == sol:
-            print(nome_utente, "ci hai messo ", punteggio, " secondi per completarlo!")
+        x = round(x, 2)
+        punteggio = round(time.time() - tempo_zero, 3)  # Tempo di risposta
+
+        if x == sol:
+            print(nome_utente, "ci hai messo", punteggio, "secondi per completarlo!")
             break
         else:
             print("Ritenta!")
@@ -42,108 +47,132 @@ def gioco_equazioni(nome_utente):
     return punteggio
 
 
-#il gioco crea un numero da 1 a 100 e bisogna indovinarlo, il gioco
-# ti dice se il numero immesso è più grande o più piccolo della soluzione
-
 def gioco_random(nome_utente):
-    print(f"Ciao {nome_utente}! In questo gioco dovrai indovinare un numero, inizia a dirne uno e io ti dirò se il numero da indovinare è più grande o più piccolo! FAI VELOCE!")
-    r = random.randint(1, 100)
-    
+    """
+    Gioco per indovinare un numero casuale.
+    Il punteggio dipende dalla velocità di indovinare.
+    """
+    print(
+        f"Ciao {nome_utente}! In questo gioco dovrai indovinare un numero. "
+        f"Inizia a dirne uno e io ti dirò se il numero da indovinare è più grande o più piccolo! FAI VELOCE!"
+    )
+
+    r = random.randint(1, 100)  # Numero da indovinare
+
     while True:
-        t1 = time.time()
-        n = int(input("Che numero casuale ho generato ( tra 1 e 100)?: "))
+        tempo_zero = time.time()  # Tempo iniziale
+        n = int(input("Che numero casuale ho generato (tra 1 e 100)?: "))
         if n > r:
             print("Il numero da indovinare è più piccolo.")
         elif n < r:
             print("Il numero da indovinare è più grande.")
         else:
-            punteggio = time.time() - t1
-            punteggio = round(punteggio, 3)
-            print("Complimenti " ,nome_utente, "! Ci hai messo ", punteggio, " secondi per completare il gioco!")
+            punteggio = round(time.time() - tempo_zero, 3)  # Tempo di risposta
+            print(
+                "Complimenti", nome_utente, "! Ci hai messo", punteggio, "secondi per completare il gioco!"
+            )
             return punteggio
-    
 
-#menù da chiamare che chiama a sua volta i due giochi di sopra
+
 def menu_giochi(nome_utente):
-    choice = int(input(f"Ciao {nome_utente}! A che gioco vuoi giocare?\n1)Indovina il numero\n2)Risolvi l'equazione\n:  " ))
+    """
+    Mostra il menu dei giochi e gestisce la scelta dell'utente.
+    """
+    choice = int(
+        input(
+            f"Ciao {nome_utente}! A che gioco vuoi giocare?\n"
+            f"1) Indovina il numero\n"
+            f"2) Risolvi l'equazione\n:  "
+        )
+    )
+
     if choice == 1:
-        punteggio = gioco_random(nome_utente)
+        return gioco_random(nome_utente)
     elif choice == 2:
-        punteggio = gioco_equazioni(nome_utente)
+        return gioco_equazioni(nome_utente)
     else:
-        print("scelta non valida. Riprova.")
+        print("Scelta non valida. Riprova.")
+        return None
 
-    return punteggio
 
-#cosimo
 def login(users):
-    #print(users)
+    """
+    Funzione di login: verifica le credenziali e autentica l'utente.
+    """
     nome_utente = input("Inserisci nome utente: ")
     pwd = input("Inserisci password: ")
+
     for id_utente, user in users.items():
-        print(id_utente)
-        print(user)
         if user["nome"] == nome_utente and user["password"] == pwd:
             print(f"Login effettuato per l'utente {nome_utente}")
-
             return True, nome_utente
-        
 
     print(f"Nome utente o password sbagliata")
-    return False, " "
+    return False, ""
 
-#daniele
+
 def classifica(users):
-    classifica_users = users.copy()
-    classifica_users = sorted(classifica_users.items(), key=lambda item: list(item[1].values())[1], reverse=True)
-    index = 1
-    for user in classifica_users:
-        print(f"{index}° posto: {user[1]["nome"]} -> {user[1]["punteggio"]}")
-        index += 1
+    """
+    Stampa la classifica degli utenti in base al punteggio.
+    """
+    # Ordina la classifica in base al punteggio (decrescente)
+    classifica_users = sorted(users.items(), key=lambda item: item[1]["punteggio"], reverse=True)
 
-#roberta
-#registrazione
+    # Stampa la classifica
+    for index, (id_user, user) in enumerate(classifica_users, start=1):
+        print(f"{index}° posto: {user['nome']} -> {user['punteggio']}")
+
+
 def registra_user(users):
+    """
+    Registra un nuovo utente, evitando duplicati.
+    """
     nome = input("Inserisci il tuo nome: ")
     password = input("Inserisci la tua password: ")
 
-# Controlla se l'user è già registrato
-# users.items() restituisce tutte le coppie (chiave, valore) del dizionario users.
-# Il ciclo for itera su ciascuna coppia, assegnando la chiave a id_utente e il valore a dati.
-# Può accedere agli ID user e ai dati associati (nome e password) all'interno del ciclo.
+    # Controlla se l'utente è già registrato
     for id_user, dati in users.items():
-        if dati['nome'] == nome:
-            print("user già registrato.")
+        if dati["nome"] == nome:
+            print("Utente già registrato.")
             return
 
-    # Genera un nuovo ID user
+    # Registra un nuovo utente
     id_user = len(users) + 1
-    punteggio = 0
-    users[id_user] = {'nome': nome, 'password': password , "punteggio": punteggio}
-    print(f"Registrazione completata per {nome} con ID user {id_user}")
+    users[id_user] = {"nome": nome, "password": password, "punteggio": 0}
+    print(f"Registrazione completata per {nome} con ID utente {id_user}")
+
 
 def main(users):
-    
-
+    """
+    Funzione principale: gestisce registrazione, login e accesso ai giochi.
+    """
     while True:
-        scegli = input("Inserisci 'registra' per registrarti, 'login' per loggarti o 'esci' per terminare: ").lower()
-        if scegli == 'registra':
+        scegli = input(
+            "Inserisci 'registra' per registrarti, 'login' per loggarti o 'esci' per terminare: "
+        ).lower()
+
+        if scegli == "registra":
             registra_user(users)
-        elif scegli == 'esci':
+        elif scegli == "esci":
             break
         elif scegli == "login":
             result, nome = login(users)
             if result:
                 punteggio = menu_giochi(nome)
-                
-                choice = input("Vuoi stampare la classifica? ( Y\\N): ").lower()
-                if choice == "y" or choice == "yes":
-                    classifica(users)
-                    
+                if punteggio is not None:
+                    # Aggiorna il punteggio dell'utente
+                    for id_user, dati in users.items():
+                        if dati["nome"] == nome:
+                            dati["punteggio"] += punteggio
+
+                    # Mostra la classifica
+                    choice = input("Vuoi stampare la classifica? (Y/N): ").lower()
+                    if choice in {"y", "yes"}:
+                        classifica(users)
         else:
-            print("scelta non valido. Riprova.")
+            print("Scelta non valida. Riprova.")
 
 
+# Avvio del programma
 users = {}
 main(users)
-

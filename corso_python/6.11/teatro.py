@@ -86,6 +86,6 @@ class PostoStandard(Posto):
 
 
 
-teatro1 = Teatro(10,6)
+teatro1 = Teatro()
 posto1 = Posto()
 posto1.prenota()
