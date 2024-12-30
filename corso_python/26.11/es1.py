@@ -9,6 +9,7 @@ iris = load_iris()
 X = iris.data
 y = iris.target
 
+
 scaler = StandardScaler()
 X_scaled = scaler.fit_transform(X)
 
